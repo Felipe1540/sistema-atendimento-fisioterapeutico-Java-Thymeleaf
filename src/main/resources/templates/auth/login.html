@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAF - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3E5F5] h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-8 border-[#B39DDB]">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">SAF - Acesso</h1>
+
+    <form th:action="@{/login}" method="post" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">E-mail</label>
+            <input type="email" name="username" required
+                   class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-[#B39DDB] focus:border-[#B39DDB]">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Senha</label>
+            <input type="password" name="password" required
+                   class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-[#B39DDB] focus:border-[#B39DDB]">
+        </div>
+
+        <button type="submit"
+                class="w-full py-2 px-4 bg-[#B39DDB] hover:bg-[#9575CD] text-white font-semibold rounded-lg transition duration-200">
+            Entrar
+        </button>
+    </form>
+
+    <div th:if="${param.error}" class="mt-4 text-red-500 text-sm text-center">
+        E-mail ou senha inválidos.
+    </div>
+</div>
+
+</body>
+</html>
