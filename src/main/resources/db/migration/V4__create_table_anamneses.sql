@@ -1,0 +1,21 @@
+CREATE TABLE anamneses (
+    id BIGSERIAL PRIMARY KEY,
+    paciente_id BIGINT REFERENCES pacientes(id),
+    data_avaliacao DATE DEFAULT CURRENT_DATE,
+    diagnostico_clinico TEXT,
+    diagnostico_fisioterapeutico TEXT,
+    historia_clinica TEXT,
+    queixa_principal TEXT,
+    habitos_vida TEXT,
+    hma TEXT,
+    hmp TEXT,
+    antecedentes_pessoais TEXT,
+    antecedentes_familiares TEXT,
+    tratamentos_realizados TEXT,
+    apresentacao_paciente VARCHAR(100),
+    usa_medicamentos BOOLEAN,
+    quais_medicamentos TEXT,
+    dor_eva INTEGER,
+    objetivos_tratamento TEXT,
+    plano_tratamento TEXT
+);
