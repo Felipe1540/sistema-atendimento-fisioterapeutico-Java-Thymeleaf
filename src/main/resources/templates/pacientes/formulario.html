@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAF - Novo Paciente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3E5F5]"> <nav class="bg-[#B39DDB] p-4 text-white shadow-md mb-8">
+    <div class="container mx-auto">
+        <h1 class="text-xl font-bold">SAF - Cadastro de Paciente</h1>
+    </div>
+</nav>
+
+<div class="container mx-auto px-4 pb-12">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-[#B39DDB]">
+
+        <div class="bg-[#B39DDB] px-6 py-4">
+            <h2 class="text-white text-xl font-semibold">Identificação do Paciente</h2>
+        </div>
+
+        <form th:action="@{/pacientes/salvar}" th:object="${paciente}" method="POST" class="p-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-[#7E57C2]">Nome Completo</label>
+                    <input type="text" th:field="*{nome}" required
+                           class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#7E57C2]">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Data de Nascimento</label>
+                    <input type="date" th:field="*{dataNascimento}"
+                           class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Sexo</label>
+                    <select th:field="*{sexo}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:outline-none">
+                        <option value="Feminino">Feminino</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Telefone</label>
+                    <input type="text" th:field="*{telefone}" placeholder="(00) 00000-0000"
+                           class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Profissão</label>
+                    <input type="text" th:field="*{profissao}"
+                           class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:outline-none">
+                </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-[#7E57C2] mb-4 border-b-2 border-[#F3E5F5] pb-2">Endereço e Origem</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Cidade</label>
+                    <input type="text" th:field="*{cidade}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Bairro</label>
+                    <input type="text" th:field="*{bairro}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-[#7E57C2]">Endereço Residencial</label>
+                    <input type="text" th:field="*{enderecoResidencial}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-[#7E57C2]">Endereço Comercial</label>
+                    <input type="text" th:field="*{enderecoComercial}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Naturalidade</label>
+                    <input type="text" th:field="*{naturalidade}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Estado Civil</label>
+                    <input type="text" th:field="*{estadoCivil}" class="mt-1 block w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-4 border-t-2 border-[#F3E5F5] pt-6">
+                <a th:href="@{/dashboard}"
+                   class="px-6 py-2 text-sm font-bold text-[#7E57C2] bg-white border-2 border-[#B39DDB] rounded-lg hover:bg-[#F3E5F5] transition">
+                    Cancelar
+                </a>
+                <button type="submit"
+                        class="px-6 py-2 text-sm font-bold text-white bg-[#7E57C2] rounded-lg hover:bg-[#B39DDB] shadow-md transition">
+                    Salvar e Iniciar Anamnese
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

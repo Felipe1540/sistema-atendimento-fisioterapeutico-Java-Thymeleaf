@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAF - Perfil do Paciente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3E5F5]">
+
+<nav class="bg-[#B39DDB] p-4 text-white shadow-md">
+    <div class="container mx-auto flex justify-between">
+        <h1 class="text-xl font-bold">SAF - Prontuário Digital</h1>
+        <a th:href="@{/pacientes}" class="bg-white text-[#7E57C2] px-4 py-1 rounded-lg font-bold">Voltar à Lista</a>
+    </div>
+</nav>
+
+<div class="container mx-auto mt-8 p-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-[#7E57C2]">
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-[#F3E5F5] rounded-full mx-auto flex items-center justify-center mb-2">
+                    <span class="text-[#7E57C2] text-3xl font-bold"
+                          th:text="${#strings.substring(paciente.nome,0,1)}">P</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800" th:text="${paciente.nome}">Nome do Paciente</h2>
+                <p class="text-sm text-gray-500" th:text="${paciente.profissao}">Profissão</p>
+            </div>
+
+            <div class="space-y-3 text-sm">
+                <p><strong>Idade:</strong> <span th:text="${paciente.dataNascimento}">--/--/----</span></p>
+                <p><strong>Telefone:</strong> <span th:text="${paciente.telefone}">---</span></p>
+                <p><strong>Cidade:</strong> <span th:text="${paciente.cidade}">---</span></p>
+                <p><strong>Estado Civil:</strong> <span th:text="${paciente.estadoCivil}">---</span></p>
+            </div>
+
+            <button class="w-full mt-6 bg-[#B39DDB] text-white py-2 rounded-lg font-bold hover:bg-[#7E57C2] transition">
+                Editar Dados Básicos
+            </button>
+        </div>
+
+        <div class="lg:col-span-2 space-y-6">
+
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-bold text-[#7E57C2] mb-4">O que deseja realizar agora?</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <a th:href="@{/pacientes/{id}/anamnese(id=${paciente.id})}"
+                       class="text-center p-4 border-2 border-[#F3E5F5] rounded-lg hover:bg-[#F3E5F5] transition">
+                        <span class="block text-sm font-bold text-[#7E57C2]">Nova Anamnese</span>
+                    </a>
+                    <button class="text-center p-4 border-2 border-gray-100 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed">
+                        <span class="block text-sm font-bold text-gray-400">Avaliação Neuro</span>
+                    </button>
+                    <button class="text-center p-4 border-2 border-gray-100 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed">
+                        <span class="block text-sm font-bold text-gray-400">Avaliação Orto</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-bold text-[#7E57C2] mb-4">Histórico Clínico</h3>
+
+                <div th:each="a : ${paciente.anamneses}"
+                     class="mb-4 p-4 border-l-4 border-[#B39DDB] bg-gray-50 rounded-r-lg shadow-sm">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-4">
+
+                        <div class="flex-1 min-w-0"><p class="text-sm font-bold text-[#7E57C2]"
+                                                       th:text="${a.dataAvaliacao != null ? #temporals.format(a.dataAvaliacao, 'dd/MM/yyyy') : 'Data não registrada'}">
+                        </p>
+
+                            <div class="mt-2 space-y-2">
+                                <p class="text-sm text-gray-700 break-words">
+                                    <strong class="text-[#7E57C2]">Queixa:</strong>
+                                    <span th:text="${a.queixaPrincipal != null and a.queixaPrincipal != '' ? a.queixaPrincipal : 'Nenhuma queixa registrada'}"></span>
+                                </p>
+
+                                <p class="text-sm text-gray-700 break-words">
+                                    <strong class="text-[#7E57C2]">Conduta/Plano:</strong>
+                                    <span th:text="${a.planoTratamento != null and a.planoTratamento != '' ? a.planoTratamento : 'Nenhum plano registrado'}"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex-shrink-0">
+                            <span class="bg-[#B39DDB] text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider">
+                                ANAMNESE
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(paciente.anamneses)}" class="text-center py-8 text-gray-400">
+                    Nenhuma avaliação registrada para este paciente.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

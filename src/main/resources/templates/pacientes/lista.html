@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAF - Lista de Pacientes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3E5F5]">
+
+<nav class="bg-[#B39DDB] p-4 text-white shadow-md mb-8">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">SAF - Gestão de Pacientes</h1>
+        <a th:href="@{/dashboard}" class="bg-white text-[#7E57C2] px-4 py-1 rounded-lg font-semibold hover:bg-gray-100">Voltar</a>
+    </div>
+</nav>
+
+<main class="container mx-auto px-4">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-[#B39DDB]">
+
+        <div class="bg-[#B39DDB] px-6 py-4 flex justify-between items-center">
+            <h2 class="text-white text-xl font-semibold">Pacientes Cadastrados</h2>
+            <a th:href="@{/pacientes/novo}" class="bg-[#7E57C2] text-white px-4 py-2 rounded-lg hover:bg-[#5E35B1] transition">
+                + Novo Paciente
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                <tr class="bg-[#F3E5F5] text-[#7E57C2] uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 font-bold">Nome</th>
+                    <th class="py-3 px-6 font-bold">Telefone</th>
+                    <th class="py-3 px-6 font-bold">Cidade</th>
+                    <th class="py-3 px-6 font-bold text-center">Ações</th>
+                </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                <tr th:each="p : ${pacientes}" class="border-b border-gray-200 hover:bg-[#F3E5F5] transition">
+                    <td class="py-3 px-6 text-left whitespace-nowrap font-medium" th:text="${p.nome}"></td>
+                    <td class="py-3 px-6 text-left" th:text="${p.telefone}"></td>
+                    <td class="py-3 px-6 text-left" th:text="${p.cidade}"></td>
+                    <td class="py-3 px-6 text-center">
+                        <div class="flex item-center justify-center space-x-4">
+                            <a th:href="@{/pacientes/{id}/anamnese(id=${p.id})}"
+                               class="bg-[#B39DDB] text-white px-3 py-1 rounded hover:bg-[#7E57C2] text-xs font-bold transition">
+                                INICIAR ANAMNESE
+                            </a>
+                            <a th:href="@{/pacientes/{id}(id=${p.id})}"
+                               class="bg-[#B39DDB] text-white px-3 py-1 rounded hover:bg-[#7E57C2] text-xs font-bold transition">
+                                VER PRONTUÁRIO
+                            </a>
+                            <button class="bg-[#B39DDB] text-white px-3 py-1 rounded hover:bg-[#7E57C2] text-xs font-bold transition ">EDITAR</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${#lists.isEmpty(pacientes)}" class="p-10 text-center text-gray-500">
+            Nenhum paciente cadastrado até o momento.
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

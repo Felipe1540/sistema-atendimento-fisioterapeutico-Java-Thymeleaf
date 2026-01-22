@@ -20,14 +20,14 @@
     <p class="text-gray-600 mt-2">O que deseja fazer hoje?</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div class="p-6 border-2 border-[#B39DDB] rounded-xl hover:bg-[#F3E5F5] cursor-pointer transition">
+        <a th:href="@{/pacientes/novo}" class="p-6 border-2 border-[#B39DDB] rounded-xl hover:bg-[#F3E5F5] cursor-pointer transition block">
             <h3 class="font-bold text-[#7E57C2]">Novo Paciente</h3>
             <p class="text-sm text-gray-500">Cadastrar ficha de anamnese.</p>
-        </div>
-        <div class="p-6 border-2 border-[#B39DDB] rounded-xl hover:bg-[#F3E5F5] cursor-pointer transition">
+        </a>
+        <a th:href="@{/pacientes}" class="p-6 border-2 border-[#B39DDB] rounded-xl hover:bg-[#F3E5F5] cursor-pointer transition block text-left">
             <h3 class="font-bold text-[#7E57C2]">Buscar Paciente</h3>
             <p class="text-sm text-gray-500">Ver histórico e evoluções.</p>
-        </div>
+        </a>
     </div>
 </main>
 </body>
