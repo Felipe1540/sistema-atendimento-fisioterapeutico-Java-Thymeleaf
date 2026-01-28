@@ -1,9 +1,11 @@
 package com.saf.fisio.controller;
 
 import com.saf.fisio.model.Anamnese;
+import com.saf.fisio.model.AvaliacaoDermato;
 import com.saf.fisio.model.AvaliacaoPediatria;
 import com.saf.fisio.model.Paciente;
 import com.saf.fisio.repository.AnamneseRepository;
+import com.saf.fisio.repository.AvaliacaoDermatoRepository;
 import com.saf.fisio.repository.AvaliacaoPediatriaRepository;
 import com.saf.fisio.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class PacienteController {
 
     @Autowired
     private AvaliacaoPediatriaRepository avaliacaoPediatriaRepository;
+
+    @Autowired
+    private AvaliacaoDermatoRepository avaliacaoDermatoRepository;
 
     // Listagem de Pacientes
     @GetMapping
@@ -92,6 +97,30 @@ public class PacienteController {
         Paciente paciente = pacienteRepository.findById(pacienteId).get();
         avaliacao.setPaciente(paciente);
         avaliacaoPediatriaRepository.save(avaliacao);
+        return "redirect:/pacientes/" + pacienteId;
+    }
+
+    @GetMapping("/{id}/avaliacao-dermato")
+    public String novaAvaliacaoDermato(@PathVariable Long id, Model model) {
+        Paciente paciente = pacienteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Paciente inválido: " + id));
+
+        AvaliacaoDermato avaliacao = new AvaliacaoDermato();
+        avaliacao.setPaciente(paciente);
+
+        model.addAttribute("avaliacaoDermato", avaliacao);
+        model.addAttribute("paciente", paciente);
+        return "pacientes/dermato";
+    }
+
+    @PostMapping("/avaliacao-dermato/salvar")
+    public String salvarAvaliacaoDermato(@ModelAttribute AvaliacaoDermato avaliacao, @RequestParam Long pacienteId) {
+        Paciente paciente = pacienteRepository.findById(pacienteId)
+                .orElseThrow(() -> new IllegalArgumentException("Paciente inválido"));
+
+        avaliacao.setPaciente(paciente);
+        avaliacaoDermatoRepository.save(avaliacao);
+
         return "redirect:/pacientes/" + pacienteId;
     }
 }

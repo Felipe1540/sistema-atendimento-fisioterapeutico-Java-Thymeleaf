@@ -52,6 +52,10 @@
                        class="text-center p-4 border-2 border-[#B39DDB] rounded-lg hover:bg-[#F3E5F5] transition block">
                         <span class="block text-sm font-bold text-[#7E57C2]">Avaliação Pediatria</span>
                     </a>
+                    <a th:href="@{/pacientes/{id}/avaliacao-dermato(id=${paciente.id})}"
+                       class="text-center p-4 border-2 border-[#B39DDB] rounded-lg hover:bg-[#F3E5F5] transition block">
+                        <span class="block text-sm font-bold text-[#7E57C2]">Avaliação Dermato</span>
+                    </a>
                     <button class="text-center p-4 border-2 border-gray-100 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed">
                         <span class="block text-sm font-bold text-gray-400">Avaliação Neuro</span>
                     </button>
@@ -68,7 +72,8 @@
                      class="mb-4 p-4 border-l-4 border-[#B39DDB] bg-gray-50 rounded-r-lg shadow-sm">
                     <div class="flex flex-col md:flex-row justify-between items-start gap-4">
 
-                        <div class="flex-1 min-w-0"><p class="text-sm font-bold text-[#7E57C2]"
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-bold text-[#7E57C2]"
                                                        th:text="${a.dataAvaliacao != null ? #temporals.format(a.dataAvaliacao, 'dd/MM/yyyy') : 'Data não registrada'}">
                         </p>
 
@@ -94,18 +99,38 @@
                     </div>
                 </div>
 
-                <div th:each="ped : ${paciente.avaliacoesPediatria}" class="mb-4 p-4 border-l-4 border-pink-400 bg-gray-50 rounded-r-lg shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <div class="flex-1">
-                            <p class="text-sm font-bold text-pink-600" th:text="${#temporals.format(ped.dataAvaliacao, 'dd/MM/yyyy')}"></p>
-                            <p class="text-sm text-gray-700 mt-2">
-                                <strong>Desenvolvimento:</strong>
-                                Sustentou cabeça: <span th:text="${ped.idadeSustentouCabeca}"></span> |
-                                Andou: <span th:text="${ped.idadeAndou}"></span>
-                            </p>
-                        </div>
+                <div th:each="ped : ${paciente.avaliacoesPediatria}"
+                     class="mb-4 p-4 border-l-4 border-pink-400 bg-gray-50 rounded-r-lg shadow-sm">
+                    <div class="flex justify-between">
+                        <p class="text-sm font-bold text-pink-600"
+                           th:text="${#temporals.format(ped.dataAvaliacao, 'dd/MM/yyyy')}"></p>
                         <span class="bg-pink-400 text-white text-[10px] px-2 py-1 rounded font-bold uppercase">Pediatria</span>
                     </div>
+
+                    <p class="text-sm text-gray-700 mt-2">
+                        <strong>Desenvolvimento:</strong>
+                        Sustentou cabeça: <span th:text="${ped.idadeSustentouCabeca}"></span> |
+                        Andou: <span th:text="${ped.idadeAndou}"></span> condutas_fisioterapeuticas
+                    </p>
+                    <p class="text-sm text-gray-700 mt-2 break-words">
+                        <strong>Conduta/Plano:</strong>
+                        <span th:text="${ped.condutasFisioterapeuticas != null and ped.condutasFisioterapeuticas != '' ? ped.condutasFisioterapeuticas : 'Nenhum plano registrado'}"></span>
+                    </p>
+                </div>
+
+                <div th:each="der : ${paciente.avaliacoesDermato}" class="mb-4 p-4 border-l-4 border-[#7E57C2] bg-gray-50 rounded-r-lg shadow-sm">
+                    <div class="flex justify-between">
+                        <span class="text-sm font-bold text-[#7E57C2]" th:text="${#temporals.format(der.dataAvaliacao, 'dd/MM/yyyy')}"></span>
+                        <span class="text-[10px] bg-[#F3E5F5] text-[#7E57C2] px-2 py-1 rounded font-bold">DERMATO</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">
+                        <strong>Pele:</strong> <span th:text="${der.tipoPeleFace}"></span> |
+                        <strong>IMC:</strong> <span th:text="${der.imc}"></span>
+                    </p>
+                    <p class="text-sm text-gray-600 mt-2 break-words">
+                        <strong>Conduta/Plano:</strong>
+                        <span th:text="${der.planoTratamento != null and der.planoTratamento != '' ? der.planoTratamento : 'Nenhum plano registrado'}"></span>
+                    </p>
                 </div>
 
                 <div th:if="${#lists.isEmpty(paciente.anamneses)}" class="text-center py-8 text-gray-400">

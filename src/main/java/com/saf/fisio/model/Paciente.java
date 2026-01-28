@@ -32,4 +32,7 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     private List<AvaliacaoPediatria> avaliacoesPediatria;
+
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    private List<AvaliacaoDermato> avaliacoesDermato;
 }

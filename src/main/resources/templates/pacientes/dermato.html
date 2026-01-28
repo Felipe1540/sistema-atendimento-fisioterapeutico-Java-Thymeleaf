@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAF - Avaliação Dermato-Funcional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3E5F5] min-h-screen pb-10">
+
+<nav class="bg-[#B39DDB] p-4 text-white shadow-md mb-6">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">SAF - Dermato-Funcional</h1>
+        <span th:text="${paciente.nome}" class="font-semibold"></span>
+    </div>
+</nav>
+
+<div class="container mx-auto px-4">
+    <form th:action="@{/pacientes/avaliacao-dermato/salvar}" th:object="${avaliacaoDermato}" method="POST"
+          class="max-w-5xl mx-auto space-y-6">
+
+        <input type="hidden" name="pacienteId" th:value="${paciente.id}">
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-[#7E57C2]">
+            <div class="p-6">
+                <h3 class="text-[#7E57C2] font-bold flex items-center gap-2 mb-4">
+                    <span class="bg-[#F3E5F5] p-2 rounded-full">🌸</span> Perfil Ginecológico
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Ciclo Menstrual</label>
+                        <select th:field="*{cicloMenstrual}" class="w-full border-2 border-gray-200 rounded-lg p-2 focus:border-[#7E57C2] outline-none">
+                            <option value="Regular">Regular</option>
+                            <option value="Irregular">Irregular</option>
+                            <option value="Menopausa">Menopausa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Idade da Menarca</label>
+                        <input type="number" th:field="*{idadeMenarca}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Idade da Menopausa</label>
+                        <input type="number" th:field="*{idadeMenopausa}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Partos Normais</label>
+                        <input type="number" th:field="*{numPartosNormais}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Partos Cesárea</label>
+                        <input type="number" th:field="*{numPartosCesarea}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Anticoncepcional em uso?</label>
+                        <input type="text" th:field="*{usoAnticoncepcional}" placeholder="Qual?" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-[#7E57C2]">
+            <div class="p-6">
+                <h3 class="text-[#7E57C2] font-bold flex items-center gap-2 mb-4">
+                    <span class="bg-[#F3E5F5] p-2 rounded-full">🍎</span> Hábitos e Histórico
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Alimentação</label>
+                        <select th:field="*{alimentacao}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                            <option value="Balanceada">Balanceada</option>
+                            <option value="Regime Nutricional">Regime Nutricional</option>
+                            <option value="NDA">NDA</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-4 pt-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" th:field="*{atividadeFisicaPratica}" class="w-5 h-5 accent-[#7E57C2]">
+                            <span class="text-sm font-semibold text-gray-700">Pratica Atividade Física?</span>
+                        </label>
+                        <input type="text" th:field="*{atividadeFisicaFrequencia}" placeholder="Freq. Semanal" class="flex-1 border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-gray-700">Tratamentos Estéticos Prévios</label>
+                        <textarea th:field="*{tratamentosEsteticosPrevios}" rows="2" class="w-full border-2 border-gray-200 rounded-lg p-2"></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-gray-700">Medicações em Uso</label>
+                        <textarea th:field="*{medicacoesEmUso}" rows="2" class="w-full border-2 border-gray-200 rounded-lg p-2"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-[#7E57C2]">
+            <div class="p-6">
+                <h3 class="text-[#7E57C2] font-bold flex items-center gap-2 mb-4">
+                    <span class="bg-[#F3E5F5] p-2 rounded-full">📏</span> Exame Físico e Inspeção
+                </h3>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-6 border-b border-dashed border-gray-200">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase">Peso (kg)</label>
+                        <input type="number" step="0.1" th:field="*{peso}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase">Altura (cm)</label>
+                        <input type="number" step="0.01" th:field="*{altura}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase">IMC</label>
+                        <input type="number" step="0.1" th:field="*{imc}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase">Cintura (cm)</label>
+                        <input type="number" step="0.1" th:field="*{medidaCinturaAbdominal}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-lg p-2">
+                    </div>
+                </div>
+
+
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Fototipo Fitzpatrick</label>
+                        <select th:field="*{fototipoFitzpatrick}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                            <option th:each="i : ${#numbers.sequence(1, 6)}" th:value="${i}" th:text="'Tipo ' + ${i}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Tipo Pele (Face)</label>
+                        <select th:field="*{tipoPeleFace}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                            <option value="Seca">Seca</option>
+                            <option value="Mista">Mista</option>
+                            <option value="Oleosa">Oleosa</option>
+                            <option value="Normal">Normal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Limiar de Dor</label>
+                        <select th:field="*{limiarDor}" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                            <option value="Normal">Normal</option>
+                            <option value="Aumentado">Aumentado</option>
+                            <option value="Diminuído">Diminuído</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block text-sm font-semibold text-gray-700">Grau de Acne</label>
+                        <input type="number" th:field="*{presencaAcneGrau}" min="0" max="4" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-gray-700">Estrias / Fibro Edema (Celulite)</label>
+                        <input type="text" th:field="*{presencaFibroEdemaGeloide}" placeholder="Grau e Local" class="w-full border-2 border-gray-200 rounded-lg p-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-[#7E57C2]">
+            <div class="p-6 space-y-4">
+                <h3 class="text-[#7E57C2] font-bold">🏁 Conclusão Terapêutica</h3>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Objetivos</label>
+                    <textarea th:field="*{objetivosTerapeuticos}" rows="3" class="w-full border-2 border-gray-200 rounded-lg p-2"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Plano de Tratamento</label>
+                    <textarea th:field="*{planoTratamento}" rows="3" class="w-full border-2 border-gray-200 rounded-lg p-2"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 bg-gray-50 rounded-xl flex justify-end space-x-4">
+            <a th:href="@{/pacientes/{id}(id=${paciente.id})}" class="px-6 py-2 font-bold text-[#7E57C2]">Cancelar</a>
+            <button type="submit" class="px-10 py-3 bg-[#7E57C2] text-white font-bold rounded-xl shadow-lg hover:bg-[#5E35B1]">
+                Salvar Avaliação Dermato
+            </button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
