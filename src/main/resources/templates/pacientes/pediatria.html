@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAF - Avaliação Pediatria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3E5F5]">
+
+<nav class="bg-[#B39DDB] p-4 text-white shadow-md mb-6">
+    <div class="container mx-auto flex justify-between">
+        <h1 class="text-xl font-bold">SAF - Ficha Pediátrica</h1>
+        <span th:text="${paciente.nome}" class="font-semibold"></span>
+    </div>
+</nav>
+
+<div class="container mx-auto px-4 pb-12">
+    <form th:action="@{/pacientes/avaliacao-pediatria/salvar}" th:object="${avaliacaoPediatria}" method="POST"
+          class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg border border-[#B39DDB] overflow-hidden">
+
+        <input type="hidden" name="pacienteId" th:value="${paciente.id}">
+
+        <div class="p-8 space-y-6">
+            <h3 class="text-lg font-bold text-[#7E57C2] border-b-2 border-[#F3E5F5] pb-2">1. Dados dos Responsáveis</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-bold text-gray-700">Nome Responsável 1</label>
+                    <input type="text" th:field="*{nomeResponsavel1}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Profissão</label>
+                    <input type="text" th:field="*{profissaoResponsavel1}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Escolaridade</label>
+                    <input type="text" th:field="*{escolaridadeResponsavel1}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-dashed border-[#B39DDB] pt-4">
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-bold text-gray-400">Nome Responsável 2 (Opcional)</label>
+                    <input type="text" th:field="*{nomeResponsavel2}" class="w-full border-2 border-[#D1C4E9] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-400">Profissão</label>
+                    <input type="text" th:field="*{profissaoResponsavel2}" class="w-full border-2 border-[#D1C4E9] rounded-lg p-2">
+                </div>
+                <div class="flex items-end text-xs text-gray-400 pb-2 italic">
+                    * Dados complementares do núcleo familiar.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#F3E5F5] p-4 rounded-lg mt-4">
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Quem cuida da criança?</label>
+                    <input type="text" th:field="*{quemCuidaCrianca}" class="w-full border-2 border-white rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-[#7E57C2]">Pessoas que vivem na casa</label>
+                    <input type="number" th:field="*{pessoasNaCasa}" class="w-full border-2 border-white rounded-lg p-2">
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 bg-gray-50 space-y-6">
+            <h3 class="text-lg font-bold text-[#7E57C2] border-b-2 border-[#B39DDB] pb-2">2. História Gestacional e Neonatal</h3>
+
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">G (Gestas)</label>
+                    <input type="number" th:field="*{gestas}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">P (Partos)</label>
+                    <input type="number" th:field="*{partos}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">A (Abortos)</label>
+                    <input type="number" th:field="*{abortos}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div class="md:col-span-3">
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Tipo de Parto</label>
+                    <select th:field="*{tipoParto}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                        <option value="Normal">Normal</option>
+                        <option value="Cesariana">Cesariana</option>
+                        <option value="Fórceps">Fórceps</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-dashed border-[#B39DDB]">
+                <div>
+                    <label class="block text-xs font-bold text-[#7E57C2] uppercase">Peso (kg)</label>
+                    <input type="number" step="0.001" th:field="*{pesoNascimento}" placeholder="Ex: 3.250" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-[#7E57C2] uppercase">Comprimento (cm)</label>
+                    <input type="number" step="0.1" th:field="*{comprimentoNascimento}" placeholder="Ex: 49.5" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-[#7E57C2] uppercase">APGAR 1' min</label>
+                    <input type="number" th:field="*{apgar1Min}" min="0" max="10" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-[#7E57C2] uppercase">APGAR 5' min</label>
+                    <input type="number" th:field="*{apgar5Min}" min="0" max="10" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700">Intercorrências na Gestação/Parto</label>
+                <textarea th:field="*{intercorrenciasGestacao}" rows="2" class="w-full border-2 border-[#B39DDB] rounded-lg p-2 mt-1"></textarea>
+            </div>
+        </div>
+
+        <div class="p-8 space-y-6">
+            <h3 class="text-lg font-bold text-[#7E57C2] border-b-2 border-[#F3E5F5] pb-2">3. Marcos do Desenvolvimento</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Sustentou a Cabeça</label>
+                    <input type="text" th:field="*{idadeSustentouCabeca}" placeholder="Ex: 3 meses" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Sentou</label>
+                    <input type="text" th:field="*{idadeSentou}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Engatinhou</label>
+                    <input type="text" th:field="*{idadeEngatinhou}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Andou</label>
+                    <input type="text" th:field="*{idadeAndou}" class="w-full border-2 border-[#B39DDB] rounded-lg p-2">
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 space-y-6 border-t-2 border-[#F3E5F5]">
+            <h3 class="text-lg font-bold text-[#7E57C2] border-b-2 border-[#F3E5F5] pb-2">4. Planejamento Clínico</h3>
+
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Objetivos Terapêuticos</label>
+                    <p class="text-xs text-gray-500 mb-1 italic">O que se espera alcançar com o tratamento?</p>
+                    <textarea th:field="*{objetivosTerapeuticos}" rows="4"
+                              class="w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:ring-[#7E57C2] focus:border-[#7E57C2]"
+                              placeholder="Ex: Estimular o controle cervical e a rolagem voluntária..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Condutas Fisioterapeuticas</label>
+                    <p class="text-xs text-gray-500 mb-1 italic">Quais técnicas e exercícios serão aplicados?</p>
+                    <textarea th:field="*{condutasFisioterapeuticas}" rows="4"
+                              class="w-full border-2 border-[#B39DDB] rounded-lg p-2 focus:ring-[#7E57C2] focus:border-[#7E57C2]"
+                              placeholder="Ex: Facilitação de movimento em decúbito ventral, uso de estímulos sonoros..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 bg-gray-50 flex justify-end space-x-4">
+            <a th:href="@{/pacientes/{id}(id=${paciente.id})}" class="px-6 py-2 font-bold text-[#7E57C2]">Cancelar</a>
+            <button type="submit" class="px-10 py-3 bg-[#7E57C2] text-white font-bold rounded-xl shadow-lg hover:bg-[#5E35B1]">
+                Salvar Avaliação Pediátrica
+            </button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

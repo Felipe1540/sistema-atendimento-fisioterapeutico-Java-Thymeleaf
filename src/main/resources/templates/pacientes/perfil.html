@@ -45,8 +45,12 @@
                 <h3 class="text-lg font-bold text-[#7E57C2] mb-4">O que deseja realizar agora?</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <a th:href="@{/pacientes/{id}/anamnese(id=${paciente.id})}"
-                       class="text-center p-4 border-2 border-[#F3E5F5] rounded-lg hover:bg-[#F3E5F5] transition">
+                       class="text-center p-4 border-2 border-[#B39DDB] rounded-lg hover:bg-[#F3E5F5] transition">
                         <span class="block text-sm font-bold text-[#7E57C2]">Nova Anamnese</span>
+                    </a>
+                    <a th:href="@{/pacientes/{id}/avaliacao-pediatria(id=${paciente.id})}"
+                       class="text-center p-4 border-2 border-[#B39DDB] rounded-lg hover:bg-[#F3E5F5] transition block">
+                        <span class="block text-sm font-bold text-[#7E57C2]">Avaliação Pediatria</span>
                     </a>
                     <button class="text-center p-4 border-2 border-gray-100 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed">
                         <span class="block text-sm font-bold text-gray-400">Avaliação Neuro</span>
@@ -87,6 +91,20 @@
                             </span>
                         </div>
 
+                    </div>
+                </div>
+
+                <div th:each="ped : ${paciente.avaliacoesPediatria}" class="mb-4 p-4 border-l-4 border-pink-400 bg-gray-50 rounded-r-lg shadow-sm">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-pink-600" th:text="${#temporals.format(ped.dataAvaliacao, 'dd/MM/yyyy')}"></p>
+                            <p class="text-sm text-gray-700 mt-2">
+                                <strong>Desenvolvimento:</strong>
+                                Sustentou cabeça: <span th:text="${ped.idadeSustentouCabeca}"></span> |
+                                Andou: <span th:text="${ped.idadeAndou}"></span>
+                            </p>
+                        </div>
+                        <span class="bg-pink-400 text-white text-[10px] px-2 py-1 rounded font-bold uppercase">Pediatria</span>
                     </div>
                 </div>
 

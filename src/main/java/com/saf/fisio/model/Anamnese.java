@@ -19,7 +19,7 @@ public class Anamnese {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
-    private LocalDate dataAvaliacao;
+    private LocalDate dataAvaliacao = LocalDate.now();
 
     @Column(columnDefinition = "TEXT")
     private String diagnosticoClinico;
@@ -27,7 +27,7 @@ public class Anamnese {
     @Column(columnDefinition = "TEXT")
     private String diagnosticoFisioterapeutico;
 
-    // Seção 2: Avaliação [cite: 11]
+    // Avaliação
     @Column(columnDefinition = "TEXT")
     private String historiaClinica;
 

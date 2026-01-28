@@ -1,16 +1,15 @@
 package com.saf.fisio.controller;
 
 import com.saf.fisio.model.Anamnese;
+import com.saf.fisio.model.AvaliacaoPediatria;
 import com.saf.fisio.model.Paciente;
 import com.saf.fisio.repository.AnamneseRepository;
+import com.saf.fisio.repository.AvaliacaoPediatriaRepository;
 import com.saf.fisio.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/pacientes")
@@ -21,6 +20,9 @@ public class PacienteController {
 
     @Autowired
     private AnamneseRepository anamneseRepository;
+
+    @Autowired
+    private AvaliacaoPediatriaRepository avaliacaoPediatriaRepository;
 
     // Listagem de Pacientes
     @GetMapping
@@ -70,5 +72,26 @@ public class PacienteController {
         model.addAttribute("paciente", paciente);
         // As anamneses já virão dentro do objeto paciente se o mapeamento @OneToMany estiver correto
         return "pacientes/perfil";
+    }
+
+    @GetMapping("/{id}/avaliacao-pediatria")
+    public String novaAvaliacaoPediatria(@PathVariable Long id, Model model) {
+        Paciente paciente = pacienteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Paciente inválido"));
+
+        AvaliacaoPediatria avaliacao = new AvaliacaoPediatria();
+        avaliacao.setPaciente(paciente);
+
+        model.addAttribute("avaliacaoPediatria", avaliacao);
+        model.addAttribute("paciente", paciente);
+        return "pacientes/pediatria";
+    }
+
+    @PostMapping("/avaliacao-pediatria/salvar")
+    public String salvarAvaliacaoPediatria(@ModelAttribute AvaliacaoPediatria avaliacao, @RequestParam Long pacienteId) {
+        Paciente paciente = pacienteRepository.findById(pacienteId).get();
+        avaliacao.setPaciente(paciente);
+        avaliacaoPediatriaRepository.save(avaliacao);
+        return "redirect:/pacientes/" + pacienteId;
     }
 }
